@@ -36,6 +36,9 @@ public class QueueToStack {
         q2 = temp;
     }
 
+    public int top() {
+        return top;
+    }
 
     public int pop1() {
         while (q1.size() > 1) {

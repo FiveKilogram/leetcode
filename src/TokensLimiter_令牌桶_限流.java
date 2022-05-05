@@ -57,6 +57,7 @@ public class TokensLimiter_令牌桶_限流 {
     public static void main(String[] args) {
         TokensLimiter_令牌桶_限流 tokensLimiter = new TokensLimiter_令牌桶_限流();
         tokensLimiter.acquire();
+
     }
 
 }

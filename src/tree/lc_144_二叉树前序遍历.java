@@ -5,9 +5,9 @@
  */
 package tree;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import sun.reflect.generics.tree.Tree;
+
+import java.util.*;
 
 /**
  * 二叉树前序遍历
@@ -23,7 +23,7 @@ public class lc_144_二叉树前序遍历 {
      * @return
      */
     public static List<Integer> preOrder(TreeNode root){
-        List<Integer> list = new ArrayList<>();
+        List<Integer> list = new LinkedList<>();
         Stack<TreeNode> stack = new Stack<>();
 
         while (root != null || !stack.isEmpty()) {
@@ -41,6 +41,28 @@ public class lc_144_二叉树前序遍历 {
         }
         return list;
     }
+
+    //后序遍历，使用Deque的特性
+    public static List<Integer> preOrder2(TreeNode root){
+        Stack<TreeNode> stack = new Stack<>();
+        LinkedList<Integer> linkedList = new LinkedList<>();
+        if(root==null){
+            return linkedList;
+        }
+        stack.push(root);
+        while (!stack.isEmpty()){
+            TreeNode node = stack.pop();
+            linkedList.addFirst(node.val);
+            if(node.left!=null){
+                stack.push(node.left);
+            }
+            if(node.right!=null){
+                stack.push(node.right);
+            }
+        }
+        return linkedList;
+    }
+
 
     public static void main(String[] args) {
         TreeNode root = new TreeNode(10);
