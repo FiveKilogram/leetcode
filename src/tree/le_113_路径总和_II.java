@@ -108,6 +108,36 @@ public class le_113_路径总和_II {
             pathList.removeLast();
         }
     }
+    public List<List<Integer>> pathSum2(TreeNode root, int targetSum) {
+        List<List<Integer>> res  = new LinkedList<>();
+        List<Integer> list = new LinkedList<>();
+        dfs2(root,list,targetSum,res);
+        return res;
+    }
+
+    public void dfs2(TreeNode root, List<Integer> list, Integer target,List<List<Integer>> res){
+        if(root==null){
+            return;
+        }
+
+        if(root.val==target&&root.left==null&&root.right==null){
+            list.add(root.val);
+            res.add(new LinkedList<>(list));
+            return;
+        }
+        if(root.left!=null){
+            list.add(root.left.val);
+            dfs2(root.left,list,target-root.val,res);
+            list.remove(list.size()-1);
+        }
+        if(root.right!=null){
+            list.add(root.right.val);
+            dfs2(root.right,list,target-root.val,res);
+            list.remove(list.size()-1);
+        }
+
+    }
+
 
     /**
      * 广度优先算法

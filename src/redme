@@ -1,0 +1,26 @@
+https://programmercarl.com/
+
+https://www.bilibili.com/video/BV1g7411B7SP/?spm_id_from=333.788.recommend_more_video.0
+
+跳跃游戏
+
+组合总数
+
+spring：
+http://www.iqiyi.com/v_2avbsfw3mqc.html
+
+链接：https://pan.baidu.com/s/1zn0HTMzBQqYyKeJCv6CMpw
+提取码：j6j9
+https://www.ixigua.com/7077607013689065998
+
+void backtracking(参数）{
+    if(终止条件){
+        收集结果（比如放入最大的List中）;
+        return;
+    }
+    for(集合元素集（所有子节点个数）){
+        处理节点；（加入List,连接字符串等操作）
+        递归函数；
+        回溯操作；（撤销节点操作）
+    }
+}
