@@ -7,9 +7,9 @@ package linkedList;
 
 /**
  * 82_删除排序链表中的重复元素II
- * 给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中 没有重复出现 的数字。
- * 示例 1: 输入: 1->2->3->3->4->4->5 输出: 1->2->5
- * 示例 2: 输入: 1->1->1->2->3 输出: 2->3
+ * 给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中没有重复出现的数字。
+ * 示例1: 输入: 1->2->3->3->4->4->5 输出: 1->2->5
+ * 示例2: 输入: 1->1->1->2->3 输出: 2->3
  *
  * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/solution/java-ya-jie-dian-fei-di-gui-rong-yi-li-jie-yong-sh/
  * @author luweiliang

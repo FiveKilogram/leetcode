@@ -25,9 +25,9 @@ import java.util.Scanner;
  * 输出描述：
  * 左上角到右下角的最短路径，格式如样例所示。
  */
-public class Main2 {
+public class 走迷宫2 {
     public static void main(String[] args) {
-        Main2 main = new Main2();
+        走迷宫2 main = new 走迷宫2();
         Scanner scanner = new Scanner(System.in);
         int a = scanner.nextInt();
         int b = scanner.nextInt();
