@@ -40,25 +40,35 @@ public class 多线程按照执行顺序打印 {
         });
 
         Thread thread2 = new Thread(() -> {
+            try {
+                thread1.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("thread2");
         });
 
         Thread thread3 = new Thread(() -> {
+            try {
+                thread2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("thread3");
         });
 
-//        thread1.start();
-//        thread1.join();
-//        thread2.start();
-//        thread1.join();
-//        thread3.start();
+        thread1.start();
+        //thread1.join();
+        thread2.start();
+        //thread1.join();
+        thread3.start();
 
-        ExecutorService service = Executors.newSingleThreadExecutor();
-
-        service.submit(thread1);
-        service.submit(thread2);
-        service.submit(thread3);
-        service.shutdown();
+//        ExecutorService service = Executors.newSingleThreadExecutor();
+//
+//        service.submit(thread1);
+//        service.submit(thread2);
+//        service.submit(thread3);
+//        service.shutdown();
     }
 
     public static void main(String[] args) throws InterruptedException{

@@ -1,23 +1,22 @@
-/*
- * Copyright (c) 2017 maoyan.com
- * All rights reserved.
- *
- */
 package thread;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 用synchronized对存储加锁，然后用object原生的wait() 和 notify()做同步
- *
- * @author luweiliang
- * @created 2020/5/2
+ * Author: stone
+ * Date: 2022/5/14 18:52
  */
-public class SyncProducerAndConsumer {
-
+public class LockProducerAndConsumer2 {
     private final int MAX_LEN = 10;
     private Queue<Integer> queue = new LinkedList<Integer>();
+    private final Lock lock = new ReentrantLock(false);
+    private final Condition productCondition = lock.newCondition();
+    private final Condition consumerCondition = lock.newCondition();
+
     class Producer extends Thread {
         @Override
         public void run() {
@@ -25,24 +24,26 @@ public class SyncProducerAndConsumer {
         }
         private void producer() {
             while(true) {
-                synchronized (queue) {
+                lock.lock();
+                try {
                     while (queue.size() == MAX_LEN) {
-                        //queue.notify();
                         System.out.println("当前队列满");
                         try {
-                            queue.wait();
+                            productCondition.await();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                     queue.add(1);
-                    queue.notify();
+                    consumerCondition.signalAll();
                     System.out.println("生产者生产一条任务，当前队列长度为" + queue.size());
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } finally {
+                    lock.unlock();
                 }
             }
         }
@@ -54,34 +55,44 @@ public class SyncProducerAndConsumer {
         }
         private void consumer() {
             while (true) {
-                synchronized (queue) {
+                lock.lock();
+                try {
                     while (queue.size() == 0) {
-                        ///queue.notify();
                         System.out.println("当前队列为空");
                         try {
-                            queue.wait();
+                            consumerCondition.await();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                     queue.poll();
-                    queue.notify();
+                    productCondition.signalAll();
                     System.out.println("消费者消费一条任务，当前队列长度为" + queue.size());
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } finally {
+                    lock.unlock();
                 }
             }
         }
     }
 
     public static void main(String[] args) {
-        SyncProducerAndConsumer pc = new SyncProducerAndConsumer();
-        SyncProducerAndConsumer.Producer producer = pc.new Producer();
-        SyncProducerAndConsumer.Consumer consumer = pc.new Consumer();
+        LockProducerAndConsumer pc = new LockProducerAndConsumer();
+        LockProducerAndConsumer.Producer producer = pc.new Producer();
+        LockProducerAndConsumer.Producer producer2 = pc.new Producer();
+        LockProducerAndConsumer.Consumer consumer = pc.new Consumer();
+        LockProducerAndConsumer.Consumer consumer2 = pc.new Consumer();
+        LockProducerAndConsumer.Consumer consumer3 = pc.new Consumer();
+        LockProducerAndConsumer.Consumer consumer4 = pc.new Consumer();
         producer.start();
+        producer2.start();
         consumer.start();
+        consumer2.start();
+        consumer3.start();
+        consumer4.start();
     }
 }
